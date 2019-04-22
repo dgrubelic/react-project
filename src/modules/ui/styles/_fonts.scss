@@ -1,0 +1,7 @@
+@mixin light-font($alpha: '') {
+  @if $alpha == '' {
+    color: $lightFontColor;
+  } @else {
+    color: rgba($lightFontColor, $alpha);
+  }
+}

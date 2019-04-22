@@ -1,0 +1,15 @@
+/* eslint-disable */
+
+// @tailwind preflight;
+
+// variabls.scss must be loaded first
+@import './variables';
+
+@import './colors';
+@import './typography';
+@import './containers';
+@import './fonts';
+@import './modals';
+@import './checkbox';
+
+// @tailwind utilities;

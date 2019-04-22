@@ -1,0 +1,13 @@
+@mixin flex-container() {
+  display: flex;
+  flex: 1;
+}
+
+.page-container {
+  @include flex-container;
+}
+
+.content-container {
+  @include flex-container;
+  padding: 20px;
+}

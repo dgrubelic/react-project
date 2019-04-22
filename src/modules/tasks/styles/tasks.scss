@@ -1,0 +1,74 @@
+@import 'modules/ui/styles/globals';
+
+.tasks {
+  padding: 0 20px 40px;
+  width: 100%;
+
+  &__heading {
+    color: #fff;
+    font-weight: bold;
+    margin: 2rem 0 0.35rem;
+    margin-left: 30px;
+  }
+}
+
+.tasks-list {
+
+}
+
+.task {
+  border-bottom: 1px solid $borderColorDark;
+  color: $dimmedFontColor;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  height: 48px;
+  margin-left: 30px;
+  padding: 14px 0;
+  position: relative;
+
+  &:hover {
+    .task {
+      &__title {
+        color: #fff !important;
+      }
+    }
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &__state {
+    left: -30px;
+    position: absolute;
+    width: 40px;
+  }
+
+  &__title {
+    text-align: left;
+  }
+
+  &--completed {
+    .task {
+      &__title {
+        color: $dimmedFontColor;
+        font-style: italic;
+        text-decoration: line-through;
+      }
+    }
+  }
+
+  &--selected {
+    color: #70e1e8;
+
+    &,
+    &:hover {
+      .task {
+        &__title {
+          color: #70e1e8;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+@import 'modules/ui/styles/globals';
+
+.application {
+  @include dark-background;
+  @include flex-container;
+  @include light-font;
+
+  &-hotkeys {
+    @include flex-container;
+    cursor: default;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.sidebar {
+  border-right: 1px solid $borderColorDark;
+  display: flex;
+  width: 256px;
+}
