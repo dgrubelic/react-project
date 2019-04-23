@@ -6,7 +6,7 @@ import '../styles/tasks.scss';
 
 export class Tasks extends React.Component {
   componentDidMount() {
-    this.props.fetchTasks();
+    this.props.fetchTasks({ _sort: 'created', _order: 'desc' });
   }
 
   render() {
@@ -15,7 +15,11 @@ export class Tasks extends React.Component {
         <div className="tasks__heading">Today</div>
         <TasksList tasks={this.props.pendingTasks} />
 
-        <div className="tasks__heading">Past tasks</div>
+        <div className="tasks__heading list-filters">
+          <span className="list-filters__filter list-filters__filter--selected">Yesterday</span>
+          <span className="list-filters__filter">Last 3 days</span>
+          <span className="list-filters__filter">Last 7 days</span>
+        </div>
         <TasksList tasks={this.props.completedTasks} />
       </div>
     );
@@ -29,7 +33,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchTasks: () => dispatch(fetchTasks()),
+  fetchTasks: params => dispatch(fetchTasks(params)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tasks);

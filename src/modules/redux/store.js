@@ -10,19 +10,14 @@ export default function createStore(config) {
     return store;
   }
 
-  const { reducers } = config;
+  const { reducers, middlewares = [] } = config;
   const rootReducer = Redux.combineReducers(reducers);
-  let middlewares;
+  const coreMiddlewares = [thunk, logger, ...middlewares,];
+  const appliedMiddlewares = (process.env.NODE_ENV === 'development')
+    ? composeWithDevTools(Redux.applyMiddleware(...coreMiddlewares))
+    : Redux.applyMiddleware(...coreMiddlewares);
 
-  if (process.env.NODE_ENV === 'development') {
-    middlewares = composeWithDevTools(
-      Redux.applyMiddleware(thunk, logger)
-    );
-  } else {
-    middlewares = Redux.applyMiddleware(thunk, logger);
-  }
-
-  store = Redux.createStore(rootReducer, {}, middlewares);
+  store = Redux.createStore(rootReducer, {}, appliedMiddlewares);
   return store;
 }
 

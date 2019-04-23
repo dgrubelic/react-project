@@ -1,19 +1,19 @@
 .checkbox {
   background-color: #fff;
   border-radius: 50%;
+  cursor: pointer;
   display: inline-block;
   height: 1rem;
   overflow: hidden;
   position: relative;
   vertical-align: middle;
-  transform: translateY(-1px);
   width: 1rem;
 
   &__input {
-    left: -9999px;
-    position: absolute;
+    // left: -9999px;
+    // position: absolute;
     visibility: hidden;
-    top: -9999px;
+    // top: -9999px;
 
     &[checked] + .checkbox__mask {
       background-color: $darkAccentColor;

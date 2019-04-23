@@ -4,7 +4,8 @@ import { Checkbox } from 'modules/ui';
 
 export default class Task extends React.Component {
   toggleCompleted = () => {
-
+    this.props.task.completed = !this.props.task.completed;
+    this.forceUpdate();
   }
 
   render() {

@@ -10,7 +10,7 @@ export {
 /*
 
 {
-type: 'auth/FETCH_AUTH_SUCCESS',
+type: 'auth/FETCH_LOGIN_SUCCESS',
 payload: { accessToken: 'fn4i39fhu83qbfn438qbfe', refreshToken: 'cnmcdiueabcn4839bqciuwcnuewiqb3uy28bcew', user: { id: 1, email: 'davor@hamonlabs.com', name: 'Davor Grubelic' } }
 }
 

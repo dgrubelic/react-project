@@ -10,5 +10,6 @@ export default {
     [STORE_NAME]: reducer,
     [authStoreName]: authReducer,
     [tasksStoreName]: tasksReducer,
-  }
+  },
+  middlewares: [],
 };

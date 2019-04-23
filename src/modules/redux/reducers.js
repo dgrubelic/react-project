@@ -1,7 +1,8 @@
 const initialRequestState = {
+  config: null,
+  error: false,
   isLoading: false,
   response: null,
-  error: null,
 };
 
 export function createReducer(actions, initialState) {
@@ -16,17 +17,26 @@ export function createReducer(actions, initialState) {
 
 export function createRequestReducer(requestAction, successAction, errorAction, initialResponseState) {
   return createReducer({
-    [requestAction]: state => ({ ...state, error: null, isLoading: true }),
+    [requestAction]: (state, action) => ({
+      ...state,
+      config: action.payload,
+      error: false,
+      isLoading: true,
+      response: initialResponseState
+    }),
     [successAction]: (state, action) => ({
       ...state,
-      error: null,
+      config: null,
+      error: false,
       isLoading: false,
       response: action.payload,
     }),
     [errorAction]: (state, action) => ({
       ...state,
-      error: action.payload,
+      config: null,
+      error: true,
       isLoading: false,
+      response: action.payload,
     })
   }, { ...initialRequestState, response: initialResponseState });
 }

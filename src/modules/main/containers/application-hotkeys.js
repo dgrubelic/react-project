@@ -6,6 +6,7 @@ import Sidebar from '../components/sidebar';
 export default class ApplicationHotkeys extends React.Component {
   state = {
     isCommanderOpen: false,
+    isSidebarOpen: true,
   };
 
   keyMap = {

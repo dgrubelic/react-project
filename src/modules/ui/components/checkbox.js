@@ -6,7 +6,7 @@ export default class Checkbox extends React.Component {
     return (
       <label className="checkbox">
         <input className="checkbox__input" type="checkbox"
-          checked={this.props.checked} onChange={this.props.onChange} />
+          defaultChecked={this.props.checked} onChange={this.props.onChange} />
         <span className="checkbox__mask"></span>
       </label>
     );

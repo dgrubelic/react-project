@@ -1,3 +1,4 @@
+
 import {
   combineReducers,
   createActionType,
@@ -7,9 +8,12 @@ import {
 } from 'modules/redux';
 
 export const STORE_NAME = 'auth';
-export const FETCH_AUTH_REQUEST = createActionType(STORE_NAME, 'FETCH_AUTH_REQUEST');
-export const FETCH_AUTH_SUCCESS = createActionType(STORE_NAME, 'FETCH_AUTH_SUCCESS');
-export const FETCH_AUTH_ERROR = createActionType(STORE_NAME, 'FETCH_AUTH_ERROR');
+export const FETCH_LOGIN_REQUEST = createActionType(STORE_NAME, 'FETCH_LOGIN_REQUEST');
+export const FETCH_LOGIN_SUCCESS = createActionType(STORE_NAME, 'FETCH_LOGIN_SUCCESS');
+export const FETCH_LOGIN_ERROR = createActionType(STORE_NAME, 'FETCH_LOGIN_ERROR');
+export const FETCH_REGISTER_REQUEST = createActionType(STORE_NAME, 'FETCH_REGISTER_REQUEST');
+export const FETCH_REGISTER_SUCCESS = createActionType(STORE_NAME, 'FETCH_REGISTER_SUCCESS');
+export const FETCH_REGISTER_ERROR = createActionType(STORE_NAME, 'FETCH_REGISTER_ERROR');
 
 /**
  * Selectors
@@ -24,25 +28,27 @@ export const getUser = state => mainModuleSelector(state).user;
  * Reducers
  */
 
-const authRequestReducer = createRequestReducer(FETCH_AUTH_REQUEST, FETCH_AUTH_SUCCESS, FETCH_AUTH_ERROR, {});
+const loginRequestReducer = createRequestReducer(FETCH_LOGIN_REQUEST, FETCH_LOGIN_SUCCESS, FETCH_LOGIN_ERROR, {});
+const registerRequestReducer = createRequestReducer(FETCH_REGISTER_REQUEST, FETCH_REGISTER_SUCCESS, FETCH_REGISTER_ERROR, {});
 const accessTokenReducer = createReducer({
-  [FETCH_AUTH_REQUEST]: () => null,
-  [FETCH_AUTH_SUCCESS]: (state, action) => action.payload.accessToken,
-  [FETCH_AUTH_ERROR]: () => null,
+  [FETCH_LOGIN_REQUEST]: () => null,
+  [FETCH_LOGIN_SUCCESS]: (state, action) => action.payload.accessToken,
+  [FETCH_LOGIN_ERROR]: () => null,
 }, null);
 const refreshTokenReducer = createReducer({
-  [FETCH_AUTH_REQUEST]: () => null,
-  [FETCH_AUTH_SUCCESS]: (state, action) => action.payload.refreshToken,
-  [FETCH_AUTH_ERROR]: () => null,
+  [FETCH_LOGIN_REQUEST]: () => null,
+  [FETCH_LOGIN_SUCCESS]: (state, action) => action.payload.refreshToken,
+  [FETCH_LOGIN_ERROR]: () => null,
 }, null);
 const userProfileReducer = createReducer({
-  [FETCH_AUTH_REQUEST]: () => ({ }),
-  [FETCH_AUTH_SUCCESS]: (state, action) => action.payload.user,
-  [FETCH_AUTH_ERROR]: () => ({ }),
+  [FETCH_LOGIN_REQUEST]: () => ({ }),
+  [FETCH_LOGIN_SUCCESS]: (state, action) => action.payload.user,
+  [FETCH_LOGIN_ERROR]: () => ({ }),
 }, null);
 
 export default combineReducers({
-  authRequest: authRequestReducer,
+  loginRequest: loginRequestReducer,
+  registerRequest: registerRequestReducer,
   accessToken: accessTokenReducer,
   refreshToken: refreshTokenReducer,
   user: userProfileReducer,

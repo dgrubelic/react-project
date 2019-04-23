@@ -1,9 +1,11 @@
+import { apiRequestUrl } from 'modules/core';
 import {
   combineReducers,
   createActionType,
   createModuleSelector,
-  createRequestAction,
   createRequestReducer,
+  createReducer,
+  dispatchRequest,
 } from 'modules/redux';
 
 export const STORE_NAME = 'tasks';
@@ -16,17 +18,15 @@ export const CREATE_TASK_ERROR = createActionType(STORE_NAME, 'CREATE_TASK_ERROR
 export const UPDATE_TASK_REQUEST = createActionType(STORE_NAME, 'UPDATE_TASK_REQUEST');
 export const UPDATE_TASK_SUCCESS = createActionType(STORE_NAME, 'UPDATE_TASK_SUCCESS');
 export const UPDATE_TASK_ERROR = createActionType(STORE_NAME, 'UPDATE_TASK_ERROR');
-
-// Request actions
-const fetchTasksRquest = createRequestAction(FETCH_TASKS_REQUEST, FETCH_TASKS_SUCCESS, FETCH_TASKS_ERROR);
-const createTaskRequest = createRequestAction(CREATE_TASK_REQUEST, CREATE_TASK_SUCCESS, CREATE_TASK_ERROR);
-const updateTaskRequest = createRequestAction(UPDATE_TASK_REQUEST, UPDATE_TASK_SUCCESS, UPDATE_TASK_ERROR);
+export const DELETE_TASK_REQUEST = createActionType(STORE_NAME, 'DELETE_TASK_REQUEST');
+export const DELETE_TASK_SUCCESS = createActionType(STORE_NAME, 'DELETE_TASK_SUCCESS');
+export const DELETE_TASK_ERROR = createActionType(STORE_NAME, 'DELETE_TASK_ERROR');
 
 // Selectors
 const tasksModuleSelector = createModuleSelector(STORE_NAME);
 export const getTasks = state => tasksModuleSelector(state).tasks;
-export const getCompletedTasks = state => getTasks(state).response.filter(task => task.completed);
-export const getPendingTasks = state => getTasks(state).response.filter(task => !task.completed);
+export const getCompletedTasks = state => getTasks(state).filter(task => task.completed);
+export const getPendingTasks = state => getTasks(state).filter(task => !task.completed);
 
 /**
  * Action creators
@@ -34,35 +34,69 @@ export const getPendingTasks = state => getTasks(state).response.filter(task => 
 
 export function fetchTasks(params) {
   const config = {
-    url: 'https://jsonplaceholder.typicode.com/todos',
+    endpoint: apiRequestUrl('tasks'),
+    params,
+    types: [
+      FETCH_TASKS_REQUEST,
+      FETCH_TASKS_SUCCESS,
+      FETCH_TASKS_ERROR,
+    ],
   };
 
-  return fetchTasksRquest(config);
+  return dispatchRequest(config);
 }
 
 export function createTask(data) {
   const config = {
     method: 'post',
-    url: 'https://jsonplaceholder.typicode.com/todos',
+    endpoint: apiRequestUrl('tasks'),
+    types: [
+      CREATE_TASK_REQUEST,
+      CREATE_TASK_SUCCESS,
+      CREATE_TASK_ERROR,
+    ],
   };
 
-  return createTaskRequest(config);
+  return dispatchRequest(config);
 }
 
 export function updateTask(id, data) {
   const config = {
-    method: 'post',
-    url: `https://jsonplaceholder.typicode.com/todos/${id}`,
+    method: 'put',
+    endpoint: apiRequestUrl(`tasks/${id}`),
+    types: [
+      UPDATE_TASK_REQUEST,
+      UPDATE_TASK_SUCCESS,
+      UPDATE_TASK_ERROR,
+    ],
   };
 
-  return updateTaskRequest(config);
+  return dispatchRequest(config);
+}
+
+export function deleteTask(id) {
+  const config = {
+    method: 'delete',
+    endpoint: apiRequestUrl(`tasks/${id}`),
+    types: [
+      DELETE_TASK_REQUEST,
+      DELETE_TASK_SUCCESS,
+      DELETE_TASK_ERROR,
+    ],
+  };
+
+  return dispatchRequest(config);
 }
 
 /**
  * Reducers
  */
 
-const tasksRequestReducer = createRequestReducer(FETCH_TASKS_REQUEST, FETCH_TASKS_SUCCESS, FETCH_TASKS_ERROR, []);
+const fetchTasksRequestReducer = createRequestReducer(FETCH_TASKS_REQUEST, FETCH_TASKS_SUCCESS, FETCH_TASKS_ERROR, []);
+const tasksReducer = createReducer({
+  [FETCH_TASKS_SUCCESS]: (state, action) => ([...state, ...action.payload])
+}, []);
 export default combineReducers({
-  tasks: tasksRequestReducer,
+  fetchTasksRequest: fetchTasksRequestReducer,
+  tasks: tasksReducer,
 });
